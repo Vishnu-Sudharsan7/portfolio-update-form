@@ -1,8 +1,14 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import axios from 'axios';
+import "./form.css";
 
 class Page1 extends React.Component {
+
+  
+
+
+
   constructor(props) {
     super(props);
     this.state = {
@@ -18,7 +24,6 @@ class Page1 extends React.Component {
       project3_title:'',
       project1_desciption:'',
       project2_desciption:'',
-      project2_desciption:'',
       company_name:'',
       about_the_role:'',
       link1:'',
@@ -29,6 +34,9 @@ class Page1 extends React.Component {
       backend:''
     };
   }
+
+
+  
 
   handleNameChange = (event) => {
     this.setState({ name: event.target.value });
@@ -97,6 +105,9 @@ class Page1 extends React.Component {
   };
 
 
+
+  
+
   handleSubmit = (event) => {
     event.preventDefault();
     const { name,description,mail, about, projects,education,year_of_exp,project1_title,project2_title,project3_title,project1_desciption,project2_desciption,project3_desciption,company_name,about_the_role,link1,link2,git_link,linkedin,frontend,backend } = this.state;
@@ -106,7 +117,18 @@ class Page1 extends React.Component {
       .then((response) => {
         console.log(response.data);
         // Redirect to login page after successful registration
+        if (response.status === 200) {
+          window.alert('Portfolio updated successfully!');
+          // Redirect to login page after successful registration
+          this.setState({ shouldRedirect: true });
+        } else {
+          window.alert('Failed to update portfolio. Please try again.');
+          console.log(response.status);
+        }
+      
+        
         this.setState({ shouldRedirect: true });
+        
       })
       .catch((error) => {
         console.error(error);
@@ -120,15 +142,16 @@ class Page1 extends React.Component {
     }
 
     return (
-      <div>
+      <div className='back-box'>
         <h1>Update Your Portfolio</h1>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit} className='form'>
           <label>
-            Username:
+            Name:
             <input
               type="text"
               value={name}
               onChange={this.handleNameChange}
+              
             />
           </label>
           <br />
